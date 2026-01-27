@@ -8,27 +8,28 @@ use Illuminate\Support\Facades\Auth;
 class UserPembayaranController extends Controller
 {
     public function index()
-    {
-        $pembayarans = Pembayaran::where('id_user', Auth::id())
-            ->whereIn('status', [
-                'belum terbayar',
-                'menunggu pembayaran',
-            ])
-            ->orderBy('tanggal', 'desc')
-            ->get();
+{
+    $userId = Auth::id();
 
-        return view('users.pembayaran.index', compact('pembayarans'));
-    }
+    // 1️⃣ TUNGGAKAN (BELUM BAYAR)
+    $tunggakan = Pembayaran::where('id_user', $userId)
+        ->whereIn('status', [
+            'belum terbayar',
+            'menunggu pembayaran'
+        ])
+        ->orderBy('tanggal', 'asc') // dari yang paling lama
+        ->get();
 
-    public function riwayat()
-    {
-        $pembayarans = Pembayaran::where('id_user', Auth::id())
-            ->where('status', 'pembayaran berhasil')
-            ->orderBy('tanggal', 'desc')
-            ->get();
+    // 2️⃣ HISTORI (SEMUA STATUS)
+    $histori = Pembayaran::where('id_user', $userId)
+        ->orderBy('tanggal', 'desc')
+        ->get();
 
-        return view('users.pembayaran.riwayat', compact('pembayarans'));
-    }
+    return view('users.pembayaran.index', compact(
+        'tunggakan',
+        'histori'
+    ));
+}
 
     public function detail($id)
     {

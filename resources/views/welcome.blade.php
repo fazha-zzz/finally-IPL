@@ -4,7 +4,7 @@
 <div class="login-container">
     <div class="logo">
         <!-- Ganti URL ini dengan path ke logo Anda -->
-        <img src="{{ asset('assets/images/big/pesona1.jpg') }}" alt="Logo">
+        <img src="{{ asset('assets/images/big/HOM.png') }}" alt="Logo">
     </div>
     <h1 class="residence-name">HOM</h1>
 

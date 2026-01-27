@@ -65,4 +65,54 @@ class UserMidtransController extends Controller
             ],
         ], 200);
     }
+
+    public function bayarSemua()
+    {
+        $userId = auth()->id();
+
+        $pembayarans = Pembayaran::where('id_user', $userId)
+            ->where('status', '!=', 'pembayaran berhasil')
+            ->get();
+
+        if ($pembayarans->count() < 1) {
+            return response()->json(['message' => 'Tidak ada tunggakan'], 400);
+        }
+
+        $total = $pembayarans->sum('total');
+        $groupOrderId = 'BULK-'.$userId.'-'.time();
+
+        Config::$serverKey = config('midtrans.server_key');
+        Config::$isProduction = config('midtrans.is_production');
+        Config::$isSanitized = true;
+        Config::$is3ds = true;
+
+        $params = [
+            'transaction_details' => [
+                'order_id' => $groupOrderId,
+                'gross_amount' => (int) $total,
+            ],
+            'customer_details' => [
+                'first_name' => auth()->user()->name,
+                'email' => auth()->user()->email,
+            ],
+        ];
+
+        $snapToken = \Midtrans\Snap::getSnapToken($params);
+
+        Pembayaran::whereIn('id', $pembayarans->pluck('id'))
+            ->update([
+                'group_order_id' => $groupOrderId,
+                'status' => 'menunggu pembayaran',
+            ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Snap token untuk pembayaran semua berhasil dibuat',
+            'data' => [
+                'snap_token' => $snapToken,
+                'group_order_id' => $groupOrderId,
+                'total' => $total,
+            ],
+        ], 200);
+    }
 }

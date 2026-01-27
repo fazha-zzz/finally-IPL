@@ -3,7 +3,7 @@
 @section('content')
 <div class="login-container">
     <div class="logo">
-        <img src="{{ asset('assets/images/big/pesona1.jpg') }}" alt="Logo">
+        <img src="{{ asset('assets/images/big/HOM.png') }}" alt="Logo">
     </div>
     <h1 class="residence-name">HOM</h1>
     <h2 class="login-type">Login Admin</h2>

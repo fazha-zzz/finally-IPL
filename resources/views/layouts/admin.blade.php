@@ -34,7 +34,7 @@
    <aside class="left-sidebar with-vertical" id="sidebarDesktop">
     <div class="brand-logo d-flex align-items-center justify-content-between">
         
-        <img src="{{ asset('assets/images/big/pesona1.jpg') }}" alt="Logo"
+        <img src="{{ asset('assets/images/big/HOM.png') }}" alt="Logo"
      class="rounded-circle border border-2 border-primary mx-auto d-block"
      style="width:130px; height:130px; object-fit:cover;"  id="sidebarTitle">
      

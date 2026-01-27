@@ -3,78 +3,102 @@
 @section('content')
 <div class="container py-4">
 
+    {{-- ================= HEADER ================= --}}
     <div class="text-center mb-4">
         <h2 class="fw-bold text-success">Payment History</h2>
         <p class="text-muted">
             Pertahankan riwayat pembayaran anda demi kemajuan HOM.
         </p>
     </div>
-    
-@if($pembayarans->where('status','!=','pembayaran berhasil')->count() > 1)
+
+    {{-- ================= TUNGGAKAN ================= --}}
+    <h4 class="mb-3">Tunggakan Pembayaran</h4>
+
+    @if ($tunggakan->count())
+        <table class="table table-bordered mb-3">
+            <thead class="table-light">
+                <tr>
+                    <th>Bulan</th>
+                    <th>Jumlah</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($tunggakan as $p)
+                    <tr>
+                        <td>
+                            {{ \Carbon\Carbon::parse($p->tanggal)->translatedFormat('F Y') }}
+                        </td>
+                        <td>
+                            Rp {{ number_format($p->total, 0, ',', '.') }}
+                        </td>
+                        <td>
+                            <span class="badge bg-danger">
+                                Belum Terbayar
+                            </span>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+
         <div class="text-center mb-4">
             <button class="btn btn-success bayar-semua-btn">
-                <i class="fas fa-wallet"></i> Bayar Semua Tunggakan
+                <i class="fas fa-wallet"></i>
+                Bayar Semua ({{ $tunggakan->count() }} Tagihan)
             </button>
         </div>
+    @else
+        <p class="text-muted mb-4">Tidak ada tunggakan 🎉</p>
     @endif
 
-    @forelse($pembayarans as $item)
-        <div class="card shadow-sm border-0 rounded-4 mb-3" style="max-width:1000px; margin:auto;">
-            <div class="card-body d-flex align-items-center">
+    <hr>
 
-                <div class="me-3">
-                    <img src="{{ asset('assets/images/big/pesona1.jpg') }}"
-                         width="48" height="48"
-                         class="rounded-circle"
-                         style="object-fit:cover;">
-                </div>
+    {{-- ================= HISTORI ================= --}}
+    <h4 class="mb-3">Histori Pembayaran</h4>
 
-                <div class="flex-grow-1">
-                    <small class="text-muted">
-                        {{ \Carbon\Carbon::parse($item->tanggal)->translatedFormat('d F Y') }}
-                    </small>
-
-                    <h5 class="mb-1 text-success">
-                        Rp {{ number_format($item->total, 0, ',', '.') }}
-                    </h5>
-
-                    @if($item->status === 'pembayaran berhasil')
-                        <span class="text-success">
-                            <i class="fas fa-check-circle"></i>
-                            Pembayaran Berhasil
-                        </span>
-
-                    @elseif($item->status === 'menunggu pembayaran')
-                        <span class="text-warning">
-                            <i class="fas fa-clock"></i>
-                            Menunggu Pembayaran
-                        </span>
-
-                    @else
-                        <span class="text-danger">
-                            <i class="fas fa-times-circle"></i>
-                            Belum Terbayar
-                        </span>
-                    @endif
-                </div>
-
-                <div class="text-end">
-                    <small class="text-muted">IDR</small>
-                    <h6 class="fw-bold">
-                        Rp {{ number_format($item->total, 0, ',', '.') }}
-                    </h6>
-                </div>
-
-            </div>
-        </div>
-    @empty
-        <div class="text-center text-muted">
-            <p>Belum ada riwayat pembayaran.</p>
-        </div>
-    @endforelse
+    @if ($histori->count())
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Bulan</th>
+                    <th>Jumlah</th>
+                    <th>Status</th>
+                    <th>Tanggal Update</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($histori as $p)
+                    <tr>
+                        <td>
+                            {{ \Carbon\Carbon::parse($p->tanggal)->translatedFormat('F Y') }}
+                        </td>
+                        <td>
+                            Rp {{ number_format($p->total, 0, ',', '.') }}
+                        </td>
+                        <td>
+                            @if ($p->status === 'berhasil dibayar')
+                                <span class="badge bg-success">Lunas</span>
+                            @else
+                                <span class="badge bg-warning text-dark">
+                                    {{ $p->status }}
+                                </span>
+                            @endif
+                        </td>
+                        <td>
+                            {{ $p->updated_at->format('d-m-Y') }}
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @else
+        <p class="text-muted">Belum ada histori pembayaran.</p>
+    @endif
 
 </div>
 
+{{-- ================= SCRIPT BAYAR SEMUA ================= --}}
 <script>
 document.querySelector('.bayar-semua-btn')?.addEventListener('click', function () {
 
@@ -95,5 +119,4 @@ document.querySelector('.bayar-semua-btn')?.addEventListener('click', function (
 
 });
 </script>
-
 @endsection

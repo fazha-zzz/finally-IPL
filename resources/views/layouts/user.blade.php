@@ -255,12 +255,12 @@
         <div class="transition-logo-container">
             <div class="transition-logo">
                 <!-- PP8B Logo Image -->
-                <img src="{{ asset('assets/images/carossel/pesona1.png') }}" alt="PP8B Logo" class="logo-image">
+                <img src="{{ asset('assets/images/carossel/HOM.png') }}" alt="PP8B Logo" class="logo-image">
             </div>
             
             <div class="transition-text">
-                <div class="brand-name">PESONA PRIMA 8</div>
-                <div class="brand-subtitle">BANJARAN</div>
+                <div class="brand-name">HOM</div>
+                <div class="brand-subtitle">housing management</div>
             </div>
 
             <div class="loading-spinner">

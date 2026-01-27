@@ -2,7 +2,7 @@
     <div class="row align-items-center no-gutters">
         <!-- Logo -->
         <div class="col-auto d-flex align-items-center">
-            <img src="{{ asset('assets/images/big/pesona1.jpg') }}" 
+            <img src="{{ asset('assets/images/big/HOM.png') }}" 
                  alt="Logo" 
                  class="rounded-circle border border-2 border-primary me-2" 
                  style="width:40px; height:40px; object-fit:cover;">

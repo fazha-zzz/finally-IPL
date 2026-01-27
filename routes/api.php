@@ -23,8 +23,9 @@ Route::middleware('auth:sanctum')->group(function () {
         return $request->user();
     });
 
-    Route::get('/pembayaran/riwayat', [UserPembayaranController::class, 'riwayat']);
+    
     Route::get('/pembayaran/{id}', [UserPembayaranController::class, 'detail']);
+    Route::get('/pembayaran/histori-belum-bayar', [UserPembayaranController::class, 'historiBelumBayar']);
 
     Route::get('/dashboard', [UserDashboardController::class, 'index']);
     Route::get('/iklan', [UserIklanController::class, 'index']);
@@ -39,6 +40,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/saran', [UserSaranController::class, 'index']);
     Route::post('/saran', [UserSaranController::class, 'store']);
+
+    Route::post('/midtrans/bayar-semua', [UserMidtransController::class, 'bayarSemua']);
 
     Route::post('/midtrans/token', [UserMidtransController::class, 'token']);
     Route::get('/midtrans/finish', function () {

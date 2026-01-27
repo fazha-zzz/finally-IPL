@@ -8,42 +8,21 @@ use Illuminate\Support\Facades\Auth;
 
 class UserPembayaranController extends Controller
 {
-    public function index()
+    public function belumDibayar(Request $request)
     {
-        $pembayarans = Pembayaran::where('id_user', Auth::id())
+        $user = $request->user(); // dari sanctum / auth api
+
+        $pembayarans = Pembayaran::where('id_user', $user->id)
+            ->whereIn('status', [
+                'belum terbayar',
+                'menunggu pembayaran'
+            ])
             ->orderBy('tanggal', 'desc')
             ->get();
 
         return response()->json([
             'success' => true,
-            'message' => 'Daftar pembayaran user',
-            'data' => $pembayarans,
-        ], 200);
-    }
-
-    public function riwayat()
-    {
-        $pembayarans = Pembayaran::where('id_user', Auth::id())
-            ->orderBy('tanggal', 'desc')
-            ->get();
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Riwayat pembayaran',
-            'data' => $pembayarans,
-        ]);
-    }
-
-    public function detail($id)
-    {
-        $pembayaran = Pembayaran::where('id_user', Auth::id())
-            ->where('id', $id)
-            ->firstOrFail();
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Detail pembayaran',
-            'data' => $pembayaran,
+            'data' => $pembayarans
         ]);
     }
 }
