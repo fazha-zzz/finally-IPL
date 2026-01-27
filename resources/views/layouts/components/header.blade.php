@@ -11,7 +11,7 @@
         <!-- Title -->
         <div class="col text-center">
             <span class="fw-bold text-dark" style="font-size: 15px; letter-spacing:0.5px;">
-                Pesona Prima 8 Banjaran
+                HOM
             </span>
         </div>
 

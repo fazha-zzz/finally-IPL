@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Iklan;
 
 class UserIklanController extends Controller
@@ -20,12 +19,12 @@ class UserIklanController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Daftar iklan berhasil diambil',
-                'data'    => $iklans
+                'data' => $iklans,
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Gagal memuat data iklan: ' . $e->getMessage()
+                'message' => 'Gagal memuat data iklan: '.$e->getMessage(),
             ], 500);
         }
     }
@@ -41,12 +40,12 @@ class UserIklanController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Detail iklan ditemukan',
-                'data'    => $iklan
+                'data' => $iklan,
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Iklan tidak ditemukan'
+                'message' => 'Iklan tidak ditemukan',
             ], 404);
         }
     }

@@ -31,6 +31,7 @@ class LoginController extends Controller
 
         // Kalau role aneh → logout & balikin ke login dengan error
         Auth::logout();
+
         return redirect()->route('login')->withErrors([
             'login' => 'Role tidak valid, hubungi admin.',
         ]);

@@ -1,14 +1,17 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\CallbackController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\UserDashboardController;
-use App\Http\Controllers\Api\UserPengumumanController;
+use App\Http\Controllers\Api\UserIklanController;
 use App\Http\Controllers\Api\UserKegiatanController;
-use App\Http\Controllers\Api\UserSaranController;  
-use App\Http\Controllers\Api\UserProfileController;
+use App\Http\Controllers\Api\UserMidtransController;
 use App\Http\Controllers\Api\UserPembayaranController;
+use App\Http\Controllers\Api\UserPengumumanController;
+use App\Http\Controllers\Api\UserProfileController;
+use App\Http\Controllers\Api\UserSaranController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 // login & logout
 Route::post('/login', [UserController::class, 'login']);
@@ -20,8 +23,11 @@ Route::middleware('auth:sanctum')->group(function () {
         return $request->user();
     });
 
+    Route::get('/pembayaran/riwayat', [UserPembayaranController::class, 'riwayat']);
+    Route::get('/pembayaran/{id}', [UserPembayaranController::class, 'detail']);
+
     Route::get('/dashboard', [UserDashboardController::class, 'index']);
-    Route::post('/pembayaran', [UserDashboardController::class, 'store']);
+    Route::get('/iklan', [UserIklanController::class, 'index']);
 
     Route::get('/pengumuman', [UserPengumumanController::class, 'index']);
     Route::get('/pengumuman/{id}', [UserPengumumanController::class, 'show']);
@@ -33,9 +39,21 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/saran', [UserSaranController::class, 'index']);
     Route::post('/saran', [UserSaranController::class, 'store']);
+
+    Route::post('/midtrans/token', [UserMidtransController::class, 'token']);
+    Route::get('/midtrans/finish', function () {
+        return redirect('/'); // atau halaman dashboard
+    });
+    Route::get('/midtrans/unfinish', function () {
+        return redirect('/'); // atau halaman pembayaran gagal
+    });
+    Route::get('/midtrans/error', function () {
+        return redirect('/'); // atau halaman pembayaran error
+
+    });
+
 });
 
-
-
-
-
+Route::post('/midtrans/callback',
+    [CallbackController::class, 'handle']
+);

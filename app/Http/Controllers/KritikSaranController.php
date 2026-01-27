@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\KritikSaran;
@@ -13,8 +14,6 @@ class KritikSaranController extends Controller
         $kritiks = KritikSaran::with('user')
             ->latest()
             ->paginate(5);
-            
-        
 
         return view('admin.saran.index', compact('kritiks'));
     }
@@ -22,6 +21,7 @@ class KritikSaranController extends Controller
     public function create()
     {
         $users = User::where('role', '!=', 'admin')->get();
+
         return view('admin.saran.create', compact('users'));
     }
 
@@ -32,7 +32,7 @@ class KritikSaranController extends Controller
             'isi' => 'required|string',
         ]);
 
-        DB::transaction(function() use ($request) {
+        DB::transaction(function () use ($request) {
             KritikSaran::create($request->all());
         });
 
@@ -42,6 +42,7 @@ class KritikSaranController extends Controller
     public function show($id)
     {
         $kritik = KritikSaran::with('user')->findOrFail($id);
+
         return view('admin.saran.show', compact('kritik'));
     }
 
@@ -54,7 +55,7 @@ class KritikSaranController extends Controller
             abort(403, 'Unauthorized');
         }
 
-        DB::transaction(function() use ($kritik) {
+        DB::transaction(function () use ($kritik) {
             $kritik->delete();
         });
 

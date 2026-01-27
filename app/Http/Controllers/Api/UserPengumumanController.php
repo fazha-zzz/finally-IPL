@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Pengumuman;
-use Illuminate\Http\Request;
-
 
 class UserPengumumanController extends Controller
 {
@@ -17,7 +15,7 @@ class UserPengumumanController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Daftar pengumuman',
-            'data' => $pengumuman
+            'data' => $pengumuman,
         ]);
     }
 
@@ -28,7 +26,7 @@ class UserPengumumanController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Detail pengumuman',
-            'data' => $pengumuman
+            'data' => $pengumuman,
         ]);
     }
 }

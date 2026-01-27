@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 
     <style>
+
+       
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background-color: #f8f9fa;
@@ -225,8 +228,16 @@
 
         @yield('styles')
     </style>
+    
 </head>
 <body>
+
+    {{-- Midtrans Snap --}}
+    <script src="https://app.sandbox.midtrans.com/snap/snap.js"
+            data-client-key="{{ config('midtrans.client_key') }}">
+    </script>
+    
+
     @include('layouts.components.header')
     @yield('content')
     @stack('scripts')
@@ -283,5 +294,6 @@
             });
         });
     </script>
+
 </body>
 </html>

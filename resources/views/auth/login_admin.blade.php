@@ -5,7 +5,7 @@
     <div class="logo">
         <img src="{{ asset('assets/images/big/pesona1.jpg') }}" alt="Logo">
     </div>
-    <h1 class="residence-name">Pesona Prima 8 Banjaran</h1>
+    <h1 class="residence-name">HOM</h1>
     <h2 class="login-type">Login Admin</h2>
 
     <form class="login-form" method="POST" action="{{ route('admin.login') }}">

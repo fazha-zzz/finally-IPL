@@ -17,12 +17,16 @@ class Pembayaran extends Model
         'id_user',
         'keamanan',
         'kebersihan',
-        'tanggal_tagih', 
+        'tanggal_tagih',
         'tanggal_jatuh_tempo',
         'tanggal',
         'status',
+        'order_id',
+        'payment_type',
+        'transaction_status',
         'dibayar_id',
         'total',
+        'group_order_id',
     ];
 
     // Relasi ke User
@@ -32,9 +36,7 @@ class Pembayaran extends Model
     }
 
     public function dibayar()
-{
-    return $this->belongsTo(Dibayar::class, 'dibayar_id', 'id');
+    {
+        return $this->belongsTo(Dibayar::class, 'dibayar_id', 'id');
+    }
 }
-
-}
-

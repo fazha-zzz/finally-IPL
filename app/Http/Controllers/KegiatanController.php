@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Kegiatan;
@@ -11,6 +12,7 @@ class KegiatanController extends Controller
     public function index()
     {
         $kegiatans = Kegiatan::latest()->paginate(5);
+
         return view('admin.kegiatan.index', compact('kegiatans'));
     }
 
@@ -23,10 +25,10 @@ class KegiatanController extends Controller
     {
         $request->validate([
             'nama_kegiatan' => 'required|string|max:255',
-            'deskripsi'     => 'nullable|string',
-            'lokasi'        => 'nullable|string|max:255',
-            'tanggal'       => 'required|date',
-            'gambar'        => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'deskripsi' => 'nullable|string',
+            'lokasi' => 'nullable|string|max:255',
+            'tanggal' => 'required|date',
+            'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
         DB::transaction(function () use ($request) {
@@ -55,6 +57,7 @@ class KegiatanController extends Controller
     public function edit($id)
     {
         $kegiatan = Kegiatan::findOrFail($id);
+
         return view('admin.kegiatan.edit', compact('kegiatan'));
     }
 
@@ -62,10 +65,10 @@ class KegiatanController extends Controller
     {
         $request->validate([
             'nama_kegiatan' => 'required|string|max:255',
-            'deskripsi'     => 'nullable|string',
-            'lokasi'        => 'nullable|string|max:255',
-            'tanggal'       => 'required|date',
-            'gambar'        => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'deskripsi' => 'nullable|string',
+            'lokasi' => 'nullable|string|max:255',
+            'tanggal' => 'required|date',
+            'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
         $kegiatan = Kegiatan::findOrFail($id);

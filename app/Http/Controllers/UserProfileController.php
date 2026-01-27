@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class UserProfileController extends Controller
@@ -11,9 +10,9 @@ class UserProfileController extends Controller
     {
         $user = Auth::user();
 
-    $iklanCount   = $user->iklan()->count();
-    $kritikCount  = $user->kritikSaran()->count();
+        $iklanCount = $user->iklan()->count();
+        $kritikCount = $user->kritikSaran()->count();
 
-    return view('users.profile.index', compact('user', 'iklanCount', 'kritikCount'));
+        return view('users.profile.index', compact('user', 'iklanCount', 'kritikCount'));
     }
 }

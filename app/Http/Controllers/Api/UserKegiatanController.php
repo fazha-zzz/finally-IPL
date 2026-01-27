@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Kegiatan;
-use Illuminate\Http\Request;
 
 class UserKegiatanController extends Controller
 {
@@ -15,7 +14,7 @@ class UserKegiatanController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Daftar kegiatan',
-            'data' => $kegiatan
+            'data' => $kegiatan,
         ]);
     }
 
@@ -26,7 +25,7 @@ class UserKegiatanController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Detail kegiatan',
-            'data' => $kegiatan
+            'data' => $kegiatan,
         ]);
     }
 }

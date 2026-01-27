@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
             $table->string('judul');
             $table->text('deskripsi');
-            $table->string('gambar')->nullable(); 
+            $table->string('gambar')->nullable();
             $table->timestamps();
         });
     }

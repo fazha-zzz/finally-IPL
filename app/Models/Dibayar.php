@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Dibayar extends Model
 {
     protected $table = 'dibayars';
+
     protected $fillable = [
         'id_user',
         'rekening_id',
@@ -23,9 +24,8 @@ class Dibayar extends Model
         return $this->belongsTo(Rekening::class, 'rekening_id');
     }
 
-   public function pembayaran()
+    public function pembayaran()
     {
-    return $this->hasMany(Pembayaran::class, 'dibayar_id');
+        return $this->hasMany(Pembayaran::class, 'dibayar_id');
     }
-
 }

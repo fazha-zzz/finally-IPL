@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Rekening;
@@ -10,6 +11,7 @@ class RekeningController extends Controller
     public function index()
     {
         $rekenings = Rekening::orderBy('bank_name', 'asc')->paginate(10);
+
         return view('admin.rekenings.index', compact('rekenings'));
     }
 
@@ -22,10 +24,10 @@ class RekeningController extends Controller
     {
         $validated = $request->validate([
             'bank_name' => 'required|string|max:255',
-            'number'    => 'required|string|max:255',
+            'number' => 'required|string|max:255',
         ]);
 
-        DB::transaction(function() use ($validated) {
+        DB::transaction(function () use ($validated) {
             Rekening::create($validated);
         });
 
@@ -35,12 +37,14 @@ class RekeningController extends Controller
     public function show($id)
     {
         $rekening = Rekening::findOrFail($id);
+
         return view('admin.rekenings.show', compact('rekening'));
     }
 
     public function edit($id)
     {
         $rekening = Rekening::findOrFail($id);
+
         return view('admin.rekenings.edit', compact('rekening'));
     }
 
@@ -48,10 +52,10 @@ class RekeningController extends Controller
     {
         $validated = $request->validate([
             'bank_name' => 'required|string|max:255',
-            'number'    => 'required|string|max:255',
+            'number' => 'required|string|max:255',
         ]);
 
-        DB::transaction(function() use ($id, $validated) {
+        DB::transaction(function () use ($id, $validated) {
             $rekening = Rekening::findOrFail($id);
             $rekening->update($validated);
         });
@@ -61,7 +65,7 @@ class RekeningController extends Controller
 
     public function destroy($id)
     {
-        DB::transaction(function() use ($id) {
+        DB::transaction(function () use ($id) {
             $rekening = Rekening::findOrFail($id);
             $rekening->delete();
         });

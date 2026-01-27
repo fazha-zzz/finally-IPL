@@ -19,7 +19,7 @@
       <i class="ti ti-alert-circle fs-6"></i>
       <div>
         <h5 class="text-white fs-3 mb-1">Welcome Admin</h5>
-        <h6 class="text-white fs-2 mb-0">Pesona Prima 8 Banjaran</h6>
+        <h6 class="text-white fs-2 mb-0">HOM</h6>
       </div>
       <button type="button" class="btn-close btn-close-white fs-2 m-0 ms-auto shadow-none" data-bs-dismiss="toast" aria-label="Close"></button>
     </div>

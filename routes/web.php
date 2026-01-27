@@ -4,22 +4,17 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\IklanController;
 use App\Http\Controllers\KegiatanController;
-use App\Http\Controllers\RekeningController;
 use App\Http\Controllers\KritikSaranController;
-use App\Http\Controllers\BiayaSettingController;
 use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\PengumumanController;
+use App\Http\Controllers\RekeningController;
+use App\Http\Controllers\UserBaruController;
 use App\Http\Controllers\UserDashboardController;
-use App\Http\Controllers\UserIklanController;
 use App\Http\Controllers\UserKegiatanController;
+use App\Http\Controllers\UserMidtransController;
 use App\Http\Controllers\UserPembayaranController;
 use App\Http\Controllers\UserPengumumanController;
-use app\Http\Controllers\UserBayarController;
-use App\Http\Controllers\BayarController;
 use App\Http\Controllers\UserProfileController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\UserBaruController;
-use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -31,26 +26,22 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 // ================= Admin Routes =================
 Route::group([
-    'prefix'     => 'admin',
-    'as'         => 'admin.',
-    'middleware' => ['auth:admin' ],
+    'prefix' => 'admin',
+    'as' => 'admin.',
+    'middleware' => ['auth:admin'],
 ], function () {
 
     Route::resource('pembayaran', PembayaranController::class);
 
     Route::put('pembayaran/{id}', [PembayaranController::class, 'update'])->name('admin.pembayaran.update');
-   // Hapus bukti bayar saja
-Route::delete('/pembayaran/{id}/hapus-bukti', [PembayaranController::class, 'destroyDibayar'])
-    ->name('pembayaran.destroyDibayar');
 
-// Hapus pembayaran beserta data terkait
-Route::delete('/pembayaran/{id}/hapus', [PembayaranController::class, 'destroyPembayaran'])
-    ->name('pembayaran.destroyPembayaran');
-// routes/web.php
-Route::post('/pembayaran/generate', [PembayaranController::class, 'generate'])
-    ->name('pembayaran.generate');
-    
-    
+    // Hapus pembayaran beserta data terkait
+    Route::delete('/pembayaran/{id}/hapus', [PembayaranController::class, 'destroyPembayaran'])
+        ->name('pembayaran.destroyPembayaran');
+    // routes/web.php
+    Route::post('/pembayaran/generate', [PembayaranController::class, 'generate'])
+        ->name('pembayaran.generate');
+
     Route::resource('biaya_setting', \App\Http\Controllers\BiayaSettingController::class)->only(['index', 'store']);
     Route::resource('iklan', IklanController::class);
     Route::resource('pengumuman', PengumumanController::class);
@@ -63,11 +54,10 @@ Route::post('/pembayaran/generate', [PembayaranController::class, 'generate'])
 Route::get('login/admin', [AdminController::class, 'showLoginForm'])->name('admin.login.form');
 Route::post('login/admin', [AdminController::class, 'login'])->name('admin.login');
 
-
 // ================= User Routes =================
 Route::group([
-    'prefix'     => 'user',
-    'as'         => 'user.',
+    'prefix' => 'user',
+    'as' => 'user.',
     'middleware' => ['auth'],
 ], function () {
     // Dashboard utama user
@@ -80,7 +70,6 @@ Route::group([
     Route::post('/bayar', [UserDashboardController::class, 'store'])
         ->name('bayar.store');
 
-
     // Daftar pembayaran
     Route::get('/pembayaran', [App\Http\Controllers\UserPembayaranController::class, 'index'])
         ->name('pembayaran.index');
@@ -89,13 +78,17 @@ Route::group([
     Route::get('/pembayaran/riwayat', [App\Http\Controllers\UserPembayaranController::class, 'riwayat'])
         ->name('pembayaran.riwayat');
 
-    // bayar
-   
+    // mitrans token
+    Route::post('/midtrans/token',
+        [UserMidtransController::class, 'token']
+    )->name('midtrans.token');
 
-        
     // Detail pembayaran
     Route::get('/pembayaran/{id}/detail', [UserPembayaranController::class, 'detail'])
         ->name('pembayaran.detail');
+
+    Route::post('/midtrans/bayar-semua', [UserMidtransController::class, 'bayarSemua']
+    )->name('midtrans.bayarSemua');
 
     // Bayar
     Route::post('/pembayaran/{id}/bayar', [App\Http\Controllers\UserPembayaranController::class, 'bayar'])
@@ -108,14 +101,14 @@ Route::group([
     Route::get('/kegiatan/{id}', [UserKegiatanController::class, 'show'])
         ->name('kegiatan.show');
 
-// Pengumuman
+    // Pengumuman
     Route::get('/pengumuman', [UserPengumumanController::class, 'index'])
         ->name('pengumuman.index');
 
     Route::get('/pengumuman/{id}', [UserPengumumanController::class, 'show'])
         ->name('pengumuman.show');
 
-// Profile
+    // Profile
     Route::get('/my-profile', [UserProfileController::class, 'index'])
         ->name('profile.index');
 

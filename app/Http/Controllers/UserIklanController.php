@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Iklan;
@@ -16,7 +17,7 @@ class UserIklanController extends Controller
 
             return view('user.iklan.index', compact('iklans'));
         } catch (\Exception $e) {
-            return back()->with('error', 'Gagal memuat data iklan: ' . $e->getMessage());
+            return back()->with('error', 'Gagal memuat data iklan: '.$e->getMessage());
         }
     }
 

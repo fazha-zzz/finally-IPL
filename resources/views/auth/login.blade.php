@@ -6,7 +6,7 @@
         <!-- Ganti URL ini dengan path ke logo Anda -->
         <img src="{{ asset('assets/images/big/pesona1.jpg') }}" alt="Logo">
     </div>
-    <h1 class="residence-name">Pesona Prima 8 Banjaran</h1>
+    <h1 class="residence-name">HOM</h1>
 
     <form class="login-form" method="POST" action="{{ route('login') }}">
         @csrf

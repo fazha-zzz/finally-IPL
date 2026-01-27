@@ -14,14 +14,25 @@ return new class extends Migration
         Schema::create('pembayarans', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_user')->constrained('users')->onDelete('cascade');
+
             $table->integer('keamanan')->default(0);
             $table->integer('kebersihan')->default(0);
-            $table->date('tanggal'); // tanggal dibuatnya pembayaran
-            $table->date('tanggal_tagih')->nullable(); // tanggal mulai ditagihkan
-            $table->date('tanggal_jatuh_tempo')->nullable(); // batas akhir pembayaran
-            $table->enum('status', ['belum terbayar', 'pembayaran berhasil'])->default('belum terbayar');
+
+            $table->date('tanggal');
+            $table->date('tanggal_tagih')->nullable();
+            $table->date('tanggal_jatuh_tempo')->nullable();
+
+            $table->string('status')->default('belum terbayar');
+
+            $table->string('order_id')->nullable()->unique();
+            $table->string('payment_type')->nullable();
+            $table->string('transaction_status')->nullable();
+
+            $table->string('group_order_id')->nullable()->index();
+
             $table->foreignId('dibayar_id')->nullable()->constrained('dibayars')->nullOnDelete();
             $table->integer('total')->default(0);
+
             $table->timestamps();
         });
     }

@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\KritikSaran;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserSaranController extends Controller
 {
@@ -18,7 +18,7 @@ class UserSaranController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Daftar kritik & saran',
-            'data' => $saran
+            'data' => $saran,
         ]);
     }
 
@@ -30,13 +30,13 @@ class UserSaranController extends Controller
 
         $saran = KritikSaran::create([
             'id_user' => Auth::id(),
-            'isi'     => $request->isi,
+            'isi' => $request->isi,
         ]);
 
         return response()->json([
             'success' => true,
             'message' => 'Kritik & saran berhasil dikirim!',
-            'data'    => $saran
+            'data' => $saran,
         ], 201);
     }
 }

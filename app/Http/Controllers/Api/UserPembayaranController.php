@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\Pembayaran;
 use Illuminate\Support\Facades\Auth;
 
@@ -10,24 +11,27 @@ class UserPembayaranController extends Controller
     public function index()
     {
         $pembayarans = Pembayaran::where('id_user', Auth::id())
-            ->whereIn('status', [
-                'belum terbayar',
-                'menunggu pembayaran',
-            ])
             ->orderBy('tanggal', 'desc')
             ->get();
 
-        return view('users.pembayaran.index', compact('pembayarans'));
+        return response()->json([
+            'success' => true,
+            'message' => 'Daftar pembayaran user',
+            'data' => $pembayarans,
+        ], 200);
     }
 
     public function riwayat()
     {
         $pembayarans = Pembayaran::where('id_user', Auth::id())
-            ->where('status', 'pembayaran berhasil')
             ->orderBy('tanggal', 'desc')
             ->get();
 
-        return view('users.pembayaran.riwayat', compact('pembayarans'));
+        return response()->json([
+            'success' => true,
+            'message' => 'Riwayat pembayaran',
+            'data' => $pembayarans,
+        ]);
     }
 
     public function detail($id)
@@ -36,6 +40,10 @@ class UserPembayaranController extends Controller
             ->where('id', $id)
             ->firstOrFail();
 
-        return view('users.pembayaran.detail', compact('pembayaran'));
+        return response()->json([
+            'success' => true,
+            'message' => 'Detail pembayaran',
+            'data' => $pembayaran,
+        ]);
     }
 }
