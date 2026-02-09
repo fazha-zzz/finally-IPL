@@ -12,7 +12,7 @@
         @csrf
 
         <div class="input-group">
-            <input id="username" type="text" class="@error('username') is-invalid @enderror" 
+            <input id="username" type="text" class="@error('username') is-invalid @enderror"
                    name="username" value="{{ old('username') }}" placeholder="Username" required autofocus>
             @error('username')
                 <span class="invalid-feedback" role="alert">
@@ -22,7 +22,7 @@
         </div>
 
         <div class="input-group">
-            <input id="password" type="password" class="@error('password') is-invalid @enderror" 
+            <input id="password" type="password" class="@error('password') is-invalid @enderror"
                    name="password" placeholder="Password" required>
             @error('password')
                 <span class="invalid-feedback" role="alert">
@@ -35,11 +35,11 @@
             <input type="checkbox" id="remember" name="remember" {{ old('remember') ? 'checked' : '' }}>
             <label for="remember">Remember Me</label>
         </div>
-        
+
         <button type="submit" class="submit-btn">
             Login Admin
         </button>
-        
+
         <div class="switch-login">
             <p>Login sebagai <a href="{{ route('login') }}">User</a></p>
         </div>
@@ -49,7 +49,7 @@
 <style>
     body {
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        background: #ffffff; /* 🔥 putih polos */
+        background: linear-gradient(to bottom, #a8dadc, #f1faee);
         display: flex;
         justify-content: center;
         align-items: center;
@@ -59,7 +59,8 @@
     }
 
     .login-container {
-        background: #fff;
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
         border-radius: 20px;
         padding: 40px;
         text-align: center;
@@ -67,31 +68,30 @@
         width: 100%;
         max-width: 400px;
         box-sizing: border-box;
-        border: 1px solid #eee;
     }
 
     .logo img {
         width: 100px;
         height: 100px;
         border-radius: 50%;
-        background-color: #f9f9f9;
-        border: 3px solid #ddd;
+        background-color: #f1faee;
+        border: 3px solid #457b9d;
         padding: 10px;
     }
 
     .residence-name {
         font-size: 24px;
         font-weight: 600;
-        color: #333;
+        color: #457b9d;
         margin: 20px 0 10px 0;
     }
 
     .login-type {
         font-size: 18px;
         font-weight: 500;
-        color: #555;
+        color: #457b9d;
         margin: 0 0 25px 0;
-        background: #f4f4f4;
+        background: rgba(69, 123, 157, 0.08);
         padding: 8px 16px;
         border-radius: 20px;
         display: inline-block;
@@ -105,23 +105,23 @@
     .input-group input {
         width: 100%;
         padding: 15px 20px;
-        border: 1px solid #ddd;
+        border: none;
         border-radius: 10px;
-        background-color: #fff;
+        background-color: rgba(255, 255, 255, 0.5);
         font-size: 16px;
-        color: #333;
-        transition: border-color 0.3s, box-shadow 0.3s;
+        color: #457b9d;
+        transition: background-color 0.3s;
         box-sizing: border-box;
     }
-    
+
     .input-group input:focus {
         outline: none;
-        border-color: #3498db;
-        box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        background-color: rgba(255, 255, 255, 0.8);
+        box-shadow: 0 0 0 3px rgba(69, 123, 157, 0.3);
     }
-    
+
     .input-group input::placeholder {
-        color: #aaa;
+        color: rgba(69, 123, 157, 0.7);
     }
 
     .input-group .is-invalid {
@@ -162,16 +162,14 @@
         font-size: 18px;
         font-weight: 600;
         color: white;
-        background: linear-gradient(to right, #3498db, #2c3e50);
+        background: linear-gradient(to right, #6aa84f, #38761d);
         cursor: pointer;
         transition: background-color 0.3s, transform 0.2s;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
 
     .submit-btn:hover {
-        background: linear-gradient(to right, #2c3e50, #3498db);
+        background: linear-gradient(to right, #4a8035, #295214);
         transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
     }
 
     .switch-login {
@@ -183,11 +181,11 @@
     .switch-login p {
         margin: 0;
         font-size: 14px;
-        color: #555;
+        color: #457b9d;
     }
 
     .switch-login a {
-        color: #3498db;
+        color: #457b9d;
         text-decoration: none;
         font-weight: 600;
         border-bottom: 1px solid transparent;
@@ -195,7 +193,7 @@
     }
 
     .switch-login a:hover {
-        border-bottom: 1px solid #3498db;
+        border-bottom: 1px solid #457b9d;
     }
 </style>
 @endsection

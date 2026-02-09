@@ -15,29 +15,41 @@ class UserSaranController extends Controller
         return view('users.saran.index', compact('saran'));
     }
 
-    public function store(Request $request)
-    {
-        $request->validate([
+public function store(Request $request)
+{
+    $request->validate([
         'isi' => 'required|string|max:500',
-        'gambar.*' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+        'attachments.*' => [
+            'file',
+            'mimes:jpg,jpeg,png,pdf',
+            'max:2048'
+        ]
     ]);
 
     $kritik = KritikSaran::create([
         'id_user' => Auth::id(),
-        'isi' => $request->isi,
+        'isi'     => $request->isi,
         'balasan' => null,
     ]);
 
-    if ($request->hasFile('gambar')) {
-        foreach ($request->file('gambar') as $file) {
-            $path = $file->store('kritik_saran', 'public');
+    // 📎 SIMPAN ATTACHMENT USER
+    if ($request->hasFile('attachments')) {
+        foreach ($request->file('attachments') as $file) {
 
-            $kritik->gambars()->create([
-                'path' => $path,
+            // 🔐 rename biar aman
+            $filename = time().'_'.uniqid().'.'.$file->extension();
+            $path = $file->storeAs('kritik_saran_user', $filename, 'public');
+
+            $kritik->attachments()->create([
+                'file_name' => $file->getClientOriginalName(),
+                'file_path' => $path,
+                'type'      => 'user',
             ]);
         }
     }
 
-        return redirect()->route('user.saran.index')->with('success', 'Kritik & saran berhasil dikirim!');
-    }
+    return redirect()
+        ->route('user.saran.index')
+        ->with('success', 'Kritik & saran berhasil dikirim!');
+}
 }

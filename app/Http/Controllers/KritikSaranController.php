@@ -64,17 +64,44 @@ class KritikSaranController extends Controller
     }
 
     public function balas(Request $request, $id)
-    {
+{
+    $kritik = KritikSaran::findOrFail($id);
+
+    // 🔒 Kunci jika sudah dibalas
+    if ($kritik->balasan !== null) {
+        return back()->with('error', 'Balasan sudah dikirim');
+    }
+
+    // ✅ VALIDASI
     $request->validate([
-        'balasan' => 'required|string'
+        'balasan' => 'required|string',
+        'attachments.*' => [
+            'file',
+            'mimes:jpg,jpeg,png,pdf',
+            'max:2048'
+        ]
     ]);
 
-    $kritik = KritikSaran::findOrFail($id);
+    // 💾 SIMPAN BALASAN
     $kritik->update([
         'balasan' => $request->balasan
-        
     ]);
 
-    return redirect()->back()->with('success', 'Balasan berhasil dikirim');
+    // 📎 SIMPAN LAMPIRAN ADMIN
+    if ($request->hasFile('attachments')) {
+        foreach ($request->file('attachments') as $file) {
+
+            $filename = time().'_'.uniqid().'.'.$file->extension();
+            $path = $file->storeAs('kritik_saran_admin', $filename, 'public');
+
+            $kritik->attachments()->create([
+                'file_name' => $file->getClientOriginalName(),
+                'file_path' => $path,
+                'type' => 'admin',
+            ]);
+        }
     }
+
+    return back()->with('success', 'Balasan berhasil dikirim');
+}
 }

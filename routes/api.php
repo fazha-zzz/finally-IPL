@@ -26,8 +26,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/pembayaran', [UserPembayaranController::class, 'index']);
     Route::get('/pembayaran/{id}', [UserPembayaranController::class, 'detail']);
    
-    
-
     Route::get('/dashboard', [UserDashboardController::class, 'index']);
     Route::get('/iklan', [UserIklanController::class, 'index']);
 

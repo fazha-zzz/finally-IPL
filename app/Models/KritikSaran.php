@@ -24,8 +24,8 @@ class KritikSaran extends Model
         return $this->belongsTo(User::class, 'id_user');
     }
 
-    public function gambars()
+   public function attachments()
 {
-    return $this->hasMany(KritikSaranGambar::class);
+    return $this->hasMany(KritikSaranAttachment::class);
 }
 }
