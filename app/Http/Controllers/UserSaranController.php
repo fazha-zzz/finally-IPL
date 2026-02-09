@@ -18,13 +18,25 @@ class UserSaranController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'isi' => 'required|string|max:500',
-        ]);
+        'isi' => 'required|string|max:500',
+        'gambar.*' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+    ]);
 
-        KritikSaran::create([
-            'id_user' => Auth::id(),
-            'isi' => $request->isi,
-        ]);
+    $kritik = KritikSaran::create([
+        'id_user' => Auth::id(),
+        'isi' => $request->isi,
+        'balasan' => null,
+    ]);
+
+    if ($request->hasFile('gambar')) {
+        foreach ($request->file('gambar') as $file) {
+            $path = $file->store('kritik_saran', 'public');
+
+            $kritik->gambars()->create([
+                'path' => $path,
+            ]);
+        }
+    }
 
         return redirect()->route('user.saran.index')->with('success', 'Kritik & saran berhasil dikirim!');
     }

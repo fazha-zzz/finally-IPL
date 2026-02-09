@@ -25,13 +25,13 @@
              </a>
           </li>
 
-            <!-- ---------------------------------- -->
-             <li class="sidebar-item ">
-              <a class="sidebar-link {{ request()->routeIs('admin.rekenings.*') ? 'bg-primary text-white rounded' : '' }}" href="{{ route('admin.rekenings.index') }}">
-                <span><i class="ti ti-building-bank"></i></span>
-                <span class="hide-menu">Rekening</span>
-              </a>
-            </li>
+          <li class="sidebar-item" >
+           <a class="sidebar-link {{ request()->routeIs('admin.Tempo.jatuh-tempo') ? 'bg-primary text-white rounded' : '' }}" 
+                href="{{ route('admin.Tempo.jatuh-tempo') }}">
+                <span><i class="ti ti-clock"></i></span>
+                <span class="hide-menu">Tenggat waktu</span>
+             </a>
+          </li>
 
             <li class="sidebar-item ">
               <a class="sidebar-link {{ request()->routeIs('admin.iklan.*') ? 'bg-primary text-white rounded' : '' }}" href="{{ route('admin.iklan.index') }}">

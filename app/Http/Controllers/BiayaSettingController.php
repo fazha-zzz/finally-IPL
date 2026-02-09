@@ -19,8 +19,8 @@ class BiayaSettingController extends Controller
         $request->validate([
             'keamanan' => 'required|integer|min:0',
             'kebersihan' => 'required|integer|min:0',
-            'tanggal_tagih' => 'required|date',
-            'tanggal_jatuh_tempo' => 'required|date|after_or_equal:tanggal_tagih',
+            'denda' => 'required|integer|min:0',
+            'tanggal_jatuh_tempo' => 'required|date',
         ]);
 
         BiayaSetting::updateOrCreate(
@@ -28,7 +28,7 @@ class BiayaSettingController extends Controller
             [
                 'keamanan' => $request->keamanan,
                 'kebersihan' => $request->kebersihan,
-                'tanggal_tagih' => $request->tanggal_tagih,
+                'denda' => $request->denda,
                 'tanggal_jatuh_tempo' => $request->tanggal_jatuh_tempo,
             ]
         );

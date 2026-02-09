@@ -34,7 +34,7 @@ class UserMidtransController extends Controller
         $params = [
             'transaction_details' => [
                 'order_id' => $orderId,
-                'gross_amount' => (int) $pembayaran->total,
+                'gross_amount' => (int) ($pembayaran->total + $pembayaran->denda),
             ],
             'customer_details' => [
                 'first_name' => auth()->user()->name,
@@ -87,15 +87,19 @@ class UserMidtransController extends Controller
         Config::$is3ds = true;
 
         $params = [
-            'transaction_details' => [
-                'order_id' => $groupOrderId,
-                'gross_amount' => (int) $total,
-            ],
-            'customer_details' => [
-                'first_name' => auth()->user()->name,
-                'email' => auth()->user()->email,
-            ],
-        ];
+    'transaction_details' => [
+        'order_id'     => $groupOrderId,
+        'gross_amount' => (int) $total,
+    ],
+    'customer_details'    => [
+        'first_name' => auth()->user()->name,
+        'email'      => auth()->user()->email,
+    ],
+    'callbacks'           => [
+        'finish' => config('app.url') . '/midtrans/finish',
+    ],
+];
+
 
         $snapToken = \Midtrans\Snap::getSnapToken($params);
 

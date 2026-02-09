@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\KritikSaran;
+use App\Models\KritikSaranGambar;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -60,5 +61,20 @@ class KritikSaranController extends Controller
         });
 
         return redirect()->route('admin.saran.index')->with('success', 'Kritik & saran berhasil dihapus.');
+    }
+
+    public function balas(Request $request, $id)
+    {
+    $request->validate([
+        'balasan' => 'required|string'
+    ]);
+
+    $kritik = KritikSaran::findOrFail($id);
+    $kritik->update([
+        'balasan' => $request->balasan
+        
+    ]);
+
+    return redirect()->back()->with('success', 'Balasan berhasil dikirim');
     }
 }

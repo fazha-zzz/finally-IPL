@@ -11,5 +11,5 @@ class BiayaSetting extends Model
 
     protected $table = 'biaya_settings';
 
-    protected $fillable = ['keamanan', 'kebersihan', 'tanggal_tagih', 'tanggal_jatuh_tempo'];
+    protected $fillable = ['keamanan', 'kebersihan', 'denda', 'tanggal_jatuh_tempo'];
 }

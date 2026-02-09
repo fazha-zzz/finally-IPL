@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('biaya_settings', function (Blueprint $table) {
+        Schema::create('kritik_saran_gambar', function (Blueprint $table) {
             $table->id();
-            $table->integer('keamanan')->default(0);
-            $table->integer('kebersihan')->default(0);
-            $table->integer('denda')->default(0); 
-            $table->date('tanggal_jatuh_tempo')->nullable(); // tanggal jatuh tempo
+            $table->foreignId('kritik_saran_id')->constrained()->onDelete('cascade');
+            $table->string('path');
             $table->timestamps();
         });
     }
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('biaya_settings');
+        Schema::dropIfExists('kritik_saran_gambar');
     }
 };

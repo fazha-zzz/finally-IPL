@@ -166,12 +166,12 @@ class PembayaranController extends Controller
     // =========================
     private function createIfNotExists($userId, $biaya, $today)
     {
-        // $exists = Pembayaran::where('id_user', $userId)
-        //     ->whereMonth('tanggal', $today->month)
-        //     ->whereYear('tanggal', $today->year)
-        //     ->exists();
+        $exists = Pembayaran::where('id_user', $userId)
+            ->whereMonth('tanggal', $today->month)
+            ->whereYear('tanggal', $today->year)
+            ->exists();
 
-        // if (! $exists) {
+        if (! $exists) {
             Pembayaran::create([
                 'id_user' => $userId,
                 'keamanan' => $biaya->keamanan,
@@ -181,6 +181,6 @@ class PembayaranController extends Controller
                 'status' => 'belum terbayar',
                 'total' => $biaya->keamanan + $biaya->kebersihan,
             ]);
-        // }
+        }
     }
 }

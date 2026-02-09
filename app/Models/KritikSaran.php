@@ -13,6 +13,8 @@ class KritikSaran extends Model
 
     protected $fillable = [
         'id_user',
+        'gambar',
+        'balasan',
         'isi',
     ];
 
@@ -21,4 +23,9 @@ class KritikSaran extends Model
     {
         return $this->belongsTo(User::class, 'id_user');
     }
+
+    public function gambars()
+{
+    return $this->hasMany(KritikSaranGambar::class);
+}
 }

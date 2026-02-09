@@ -15,9 +15,11 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('id_user')->nullable();
             $table->foreign('id_user')->references('id')->on('users')->onDelete('set null');
-
+            $table->string('gambar')->nullable();
+            $table->string('balasan')->nullable();
             $table->text('isi'); // isi kritik/saran
             $table->timestamps();
+            
         });
 
     }

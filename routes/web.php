@@ -15,6 +15,8 @@ use App\Http\Controllers\UserMidtransController;
 use App\Http\Controllers\UserPembayaranController;
 use App\Http\Controllers\UserPengumumanController;
 use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\UserSaranController;
+use App\Http\Controllers\JatuhTempoController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -31,6 +33,7 @@ Route::group([
     'middleware' => ['auth:admin'],
 ], function () {
 
+    // Dashboard utama admin
     Route::resource('pembayaran', PembayaranController::class);
 
     Route::put('pembayaran/{id}', [PembayaranController::class, 'update'])->name('admin.pembayaran.update');
@@ -42,6 +45,19 @@ Route::group([
     Route::post('/pembayaran/generate', [PembayaranController::class, 'generate'])
         ->name('pembayaran.generate');
 
+        Route::put('/saran/{id}/balas',[KritikSaranController::class, 'balas'])->name('saran.balas');
+
+        Route::get('/Tempo/jatuh-tempo', [JatuhTempoController::class, 'jatuhTempo']
+     )->name('Tempo.jatuh-tempo');
+
+     Route::get('/Tempo/jatuh-tempo/export',
+    [JatuhTempoController::class, 'exportJatuhTempo']
+)->name('Tempo.jatuh-tempo.export');
+
+Route::get('/Tempo/jatuh-tempo/pdf', 
+    [JatuhTempoController::class, 'exportJatuhTempoPdf']
+)->name('Tempo.jatuh-tempo.pdf');
+
     Route::resource('biaya_setting', \App\Http\Controllers\BiayaSettingController::class)->only(['index', 'store']);
     Route::resource('iklan', IklanController::class);
     Route::resource('pengumuman', PengumumanController::class);
@@ -49,6 +65,8 @@ Route::group([
     Route::resource('saran', KritikSaranController::class);
     Route::resource('rekenings', RekeningController::class);
     Route::resource('users', UserBaruController::class);
+
+
 });
 
 Route::get('login/admin', [AdminController::class, 'showLoginForm'])->name('admin.login.form');

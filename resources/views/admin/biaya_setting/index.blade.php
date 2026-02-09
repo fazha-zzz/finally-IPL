@@ -34,12 +34,17 @@
                     </div>
                 </div>
 
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Denda Keterlambatan</label>
+                     <div class="input-group">
+                        <span class="input-group-text">Rp</span>
+                    <input type="number" name="denda" class="form-control"
+                        value="{{ old('denda', $setting->denda ?? 0) }}" required>
+                        </div>
+                 </div>
+
                 <div class="row g-3">
-                    <div class="col-md-6">
-                        <label class="form-label fw-bold">Tanggal Tagih</label>
-                        <input type="date" name="tanggal_tagih" class="form-control" 
-                               value="{{ old('tanggal_tagih', $setting->tanggal_tagih ?? '') }}" required>
-                    </div>
                     <div class="col-md-6">
                         <label class="form-label fw-bold">Tanggal Jatuh Tempo</label>
                         <input type="date" name="tanggal_jatuh_tempo" class="form-control" 

@@ -64,7 +64,9 @@
                     <th>Bulan</th>
                     <th>Jumlah</th>
                     <th>Status</th>
-                    <th>Tanggal Update</th>
+                     <th>Denda</th>
+
+                    <th>Tanggal Jatuh Tempo</th>
                 </tr>
             </thead>
             <tbody>
@@ -86,7 +88,19 @@
                             @endif
                         </td>
                         <td>
-                            {{ $p->updated_at->format('d-m-Y') }}
+                            @if($p->denda > 0)
+                                <span class="text-danger">
+                                    Rp {{ number_format($p->denda, 0, ',', '.') }}
+                                </span>
+                            @else
+                                -
+                            @endif
+                        </td>
+                        <td>
+                           {{ $p->tanggal_jatuh_tempo 
+                            ? \Carbon\Carbon::parse($p->tanggal_jatuh_tempo)->format('d-m-Y') 
+                            : '-' }}
+
                         </td>
                     </tr>
                 @endforeach

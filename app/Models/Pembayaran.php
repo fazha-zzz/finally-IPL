@@ -4,6 +4,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,7 +18,6 @@ class Pembayaran extends Model
         'id_user',
         'keamanan',
         'kebersihan',
-        'tanggal_tagih',
         'tanggal_jatuh_tempo',
         'tanggal',
         'status',
@@ -38,5 +38,26 @@ class Pembayaran extends Model
     public function dibayar()
     {
         return $this->belongsTo(Dibayar::class, 'dibayar_id', 'id');
+    }
+
+   public function getDendaAttribute()
+{
+    $setting = \App\Models\BiayaSetting::first();
+
+    if (!$setting) return 0;
+
+    if (
+        $this->status !== 'berhasil dibayar' &&
+        now()->greaterThan($this->tanggal_jatuh_tempo)
+    ) {
+        return $setting->denda;
+    }
+
+    return 0;
+}
+
+    public function getTotalDenganDendaAttribute()
+    {
+        return $this->total + $this->denda;
     }
 }

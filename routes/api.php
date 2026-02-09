@@ -23,9 +23,10 @@ Route::middleware('auth:sanctum')->group(function () {
         return $request->user();
     });
 
-    
+    Route::get('/pembayaran', [UserPembayaranController::class, 'index']);
     Route::get('/pembayaran/{id}', [UserPembayaranController::class, 'detail']);
-    Route::get('/pembayaran/histori-belum-bayar', [UserPembayaranController::class, 'historiBelumBayar']);
+   
+    
 
     Route::get('/dashboard', [UserDashboardController::class, 'index']);
     Route::get('/iklan', [UserIklanController::class, 'index']);

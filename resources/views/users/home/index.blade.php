@@ -15,9 +15,15 @@
     <div class="balance-info">
         <div>
             <p class="balance-label">Tagihan</p>
-            <h2 class="balance-amount">
-                Rp {{ number_format($tagihan->total ?? 0, 0, ',', '.') }}
-            </h2>
+           <h2 class="balance-amount">
+             Rp {{ number_format($tagihan->total_dengan_denda ?? 0, 0, ',', '.') }}
+           </h2>
+
+            @if($tagihan && $tagihan->denda > 0)
+                <small class="text-danger">
+                    Termasuk denda
+                </small>
+            @endif
             <a href="{{ route('user.pembayaran.index') }}" class="balance-detail">
                 klik & cek riwayat
             </a>
@@ -37,7 +43,7 @@
                     <i class="fas fa-check me-1"></i> Lunas
                 </button>
             @else
-                <button type="button" 
+                <button type="button"
                     class="topup-btn bayar-midtrans-btn"
                     data-id="{{ $tagihan->id }}">
                     Bayar
@@ -51,7 +57,7 @@
     </div>
         </div>
     </div>
-    
+
     <!-- Main Content -->
     <div class="main-content">
 
@@ -62,7 +68,7 @@
             </a>
         @endif
 
-        
+
         <!-- Iklan Carousel Section -->
        @if($iklans->count() > 0)
 <div id="iklanCarousel" class="carousel slide my-4" data-bs-ride="carousel">
@@ -77,7 +83,7 @@
      style="max-height:200px; object-fit:cover; border-radius:8px;">
 
             {{-- Caption --}}
-            <div class="carousel-caption bg-dark bg-opacity-50 rounded p-2 text-start" 
+            <div class="carousel-caption bg-dark bg-opacity-50 rounded p-2 text-start"
                  style="bottom: 10px; left: 10px; right: 10px;">
                 <h6 class="mb-1">{{ $iklan->judul ?? 'Tidak ada judul' }}</h6>
                 <small>{{ $iklan->deskripsi ? Str::limit($iklan->deskripsi, 50) : 'Tidak ada deskripsi' }}</small>
@@ -100,8 +106,8 @@
     {{-- Indicators --}}
     <div class="carousel-indicators mt-2">
         @foreach($iklans as $key => $iklan)
-        <button type="button" data-bs-target="#iklanCarousel" data-bs-slide-to="{{ $key }}" 
-                class="{{ $key == 0 ? 'active' : '' }}" aria-current="{{ $key == 0 ? 'true' : 'false' }}" 
+        <button type="button" data-bs-target="#iklanCarousel" data-bs-slide-to="{{ $key }}"
+                class="{{ $key == 0 ? 'active' : '' }}" aria-current="{{ $key == 0 ? 'true' : 'false' }}"
                 aria-label="Slide {{ $key + 1 }}"></button>
         @endforeach
     </div>
@@ -156,11 +162,39 @@
             </a> -->
         </div>
 
-        
-
-        
 
 
+
+
+@if(!empty($showPopupJatuhTempo))
+<div class="modal fade" id="jatuhTempoModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title">
+                    ⚠️ Peringatan Jatuh Tempo
+                </h5>
+
+                <!-- Tombol X -->
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body text-center">
+                <p>Tagihan Anda telah melewati tanggal jatuh tempo.</p>
+                <p>Segera lakukan pembayaran untuk menghindari denda atau penonaktifan layanan.</p>
+            </div>
+
+            <div class="modal-footer">
+                <a href="{{ route('user.pembayaran.index') }}" class="btn btn-danger w-100">
+                    Bayar Sekarang
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
+@endif
 
 @push('styles')
 <style>
@@ -203,15 +237,15 @@
         min-width: 250px;
         margin-right: 12px;
     }
-    
+
     .member-card {
         padding: 12px;
     }
-    
+
     .member-text h6 {
         font-size: 13px;
     }
-    
+
     .member-text p {
         font-size: 10px;
     }
@@ -270,4 +304,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 </script>
+
+@if($showPopupJatuhTempo)
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    var jatuhTempoModal = new bootstrap.Modal(document.getElementById('jatuhTempoModal'));
+    jatuhTempoModal.show();
+});
+</script>
+@endif
+
 @endpush

@@ -19,7 +19,6 @@ return new class extends Migration
             $table->integer('kebersihan')->default(0);
 
             $table->date('tanggal');
-            $table->date('tanggal_tagih')->nullable();
             $table->date('tanggal_jatuh_tempo')->nullable();
 
             $table->string('status')->default('belum terbayar');

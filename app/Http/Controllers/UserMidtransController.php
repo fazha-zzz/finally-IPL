@@ -27,7 +27,7 @@ class UserMidtransController extends Controller
         $params = [
             'transaction_details' => [
                 'order_id' => $orderId,
-                'gross_amount' => (int) $pembayaran->total,
+                'gross_amount' => (int) $pembayaran->total_dengan_denda,
             ],
             'customer_details' => [
                 'first_name' => auth()->user()->name,
@@ -59,7 +59,9 @@ class UserMidtransController extends Controller
             return response()->json(['message' => 'Tidak ada tunggakan'], 400);
         }
 
-        $total = $pembayarans->sum('total');
+       $total = $pembayarans->sum(function ($item) {
+       return $item->total_dengan_denda;
+        });
         $groupOrderId = 'BULK-'.$userId.'-'.time();
 
         Config::$serverKey = config('midtrans.server_key');

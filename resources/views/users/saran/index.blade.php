@@ -13,17 +13,17 @@
         @endif
 
         {{-- Form Kritik & Saran --}}
-        <form action="{{ route('user.saran.store') }}" method="POST" class="mb-4">
+        <form action="{{ route('user.saran.store') }}" method="POST" enctype="multipart/form-data" class="mb-4">
             @csrf
             <div class="mb-3">
                 <label for="isi" class="form-label">Tulis kritik atau saran Anda</label>
-                <textarea 
-                    name="isi" 
-                    id="isi" 
-                    rows="4" 
-                    class="form-control @error('isi') is-invalid @enderror" 
+                <textarea
+                    name="isi"
+                    id="isi"
+                    rows="4"
+                    class="form-control @error('isi') is-invalid @enderror"
                     placeholder="Ketik pesan di sini...">{{ old('isi') }}</textarea>
-                
+
                 {{-- Pesan error validasi --}}
                 @error('isi')
                     <div class="invalid-feedback">
@@ -31,7 +31,18 @@
                     </div>
                 @enderror
             </div>
-            
+
+            <div class="mb-3">
+                <label class="form-label">Gambar (opsional)</label>
+                <input type="file" name="gambar[]" multiple class="form-control">
+                 @error('gambar.*')
+             <div class="text-danger small">
+        {{ $message }}
+             </div>
+                @enderror
+            </div>
+
+
             <button type="submit" class="btn btn-success">Kirim</button>
         </form>
 
@@ -42,6 +53,18 @@
                 <div class="card-body">
                     <p class="mb-1">{{ $item->isi }}</p>
                     <small class="text-muted">Dikirim pada {{ $item->created_at->format('d M Y H:i') }}</small>
+
+                    @if($item->balasan)
+                    <hr>
+                    <p class="text-success">
+                        <strong>Balasan Admin:</strong><br>
+                        {{ $item->balasan }}
+                    </p>
+                    <small class="text-muted">
+                        Dibalas pada {{ $item->updated_at->format('d M Y H:i') }}
+                    </small>
+                    @endif
+                    
                 </div>
             </div>
         @empty
