@@ -55,15 +55,18 @@ class UserMidtransController extends Controller
             'status' => 'menunggu pembayaran',
         ]);
 
-        return response()->json([
+                return response()->json([
             'success' => true,
             'message' => 'Snap token berhasil dibuat',
             'data' => [
                 'snap_token' => $snapToken,
-                'order_id' => $orderId,
-                'total' => $pembayaran->total,
+                'order_id'   => $orderId,
+                'total'      => $pembayaran->total,
+                'denda'      => $pembayaran->denda,
+                'total_final'=> $pembayaran->total + $pembayaran->denda,
             ],
         ], 200);
+
     }
 
     public function bayarSemua()

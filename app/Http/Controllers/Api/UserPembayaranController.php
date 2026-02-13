@@ -26,6 +26,9 @@ class UserPembayaranController extends Controller
             ->orderBy('tanggal', 'desc')
             ->get();
 
+            \Log::info('Tunggakan user '.$userId.': '.$tunggakan->count());
+            \Log::info('Histori user '.$userId.': '.$histori->count());
+
         return response()->json([
             'success' => true,
             'message' => 'Data pembayaran berhasil diambil',
@@ -37,22 +40,26 @@ class UserPembayaranController extends Controller
     }
 
     public function detail($id)
-    {
-        $pembayaran = Pembayaran::where('id_user', Auth::id())
-            ->where('id', $id)
-            ->first();
+{
+    $userId = Auth::id();
 
-        if (!$pembayaran) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Data pembayaran tidak ditemukan'
-            ], 404);
-        }
+    $pembayaran = Pembayaran::where('id_user', $userId)
+        ->where('id', $id)
+        ->first();
 
+    if (!$pembayaran) {
         return response()->json([
-            'success' => true,
-            'message' => 'Detail pembayaran berhasil diambil',
-            'data'    => $pembayaran
-        ], 200);
+            'success' => false,
+            'message' => 'Data pembayaran tidak ditemukan'
+        ], 404);
     }
+
+    \Log::info('Detail pembayaran user '.$userId.': '.$pembayaran->id);
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Detail pembayaran berhasil diambil',
+        'data'    => $pembayaran
+    ], 200);
+}
 }
