@@ -46,6 +46,7 @@ Route::group([
         ->name('pembayaran.generate');
 
         Route::put('/saran/{id}/balas',[KritikSaranController::class, 'balas'])->name('saran.balas');
+        
 
         Route::get('/Tempo/jatuh-tempo', [JatuhTempoController::class, 'jatuhTempo']
      )->name('Tempo.jatuh-tempo');

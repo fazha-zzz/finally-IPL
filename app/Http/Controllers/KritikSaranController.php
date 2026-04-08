@@ -51,17 +51,23 @@ class KritikSaranController extends Controller
     {
         $kritik = KritikSaran::findOrFail($id);
 
-        // Otorisasi: pemilik atau admin
-        if (auth()->user()->role !== 'admin' && $kritik->id_user !== auth()->id()) {
-            abort(403, 'Unauthorized');
-        }
-
-        DB::transaction(function () use ($kritik) {
-            $kritik->delete();
-        });
-
-        return redirect()->route('admin.saran.index')->with('success', 'Kritik & saran berhasil dihapus.');
+    // Proteksi admin
+    if (auth()->user()->role !== 'admin' && $kritik->id_user !== auth()->id()) {
+        abort(403, 'Unauthorized');
     }
+
+    DB::transaction(function () use ($kritik) {
+        // 1. Hapus lampiran terlebih dahulu jika ada
+        if ($kritik->attachments()) {
+            $kritik->attachments()->delete();
+        }
+        
+        // 2. Baru hapus data utamanya
+        $kritik->delete();
+    });
+
+    return redirect()->route('admin.saran.index')->with('success', 'Data berhasil dihapus.');
+}
 
     public function balas(Request $request, $id)
 {
