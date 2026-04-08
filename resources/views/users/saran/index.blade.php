@@ -33,7 +33,7 @@
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Lampiran File (opsional)</label>
+                <label class="form-label">Lampiran File (Opsional)</label>
                 <input type="file" name="attachments[]" multiple class="form-control">
                 <small class="text-muted">PDF, DOCX, XLSX, JPG, PNG, (max 2MB)</small>
             </div>

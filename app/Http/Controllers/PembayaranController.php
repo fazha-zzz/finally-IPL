@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\BiayaSetting;
@@ -15,8 +14,8 @@ class PembayaranController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->get('per_page', 10);
-        $search = $request->get('search');
-        $status = $request->get('status');
+        $search  = $request->get('search');
+        $status  = $request->get('status');
 
         if (auth()->guard('admin')->check()) {
             $query = Pembayaran::with('user');
@@ -133,7 +132,7 @@ class PembayaranController extends Controller
             abort(403);
         }
 
-        DB::transaction(fn () => $pembayaran->delete());
+        DB::transaction(fn() => $pembayaran->delete());
 
         return redirect()
             ->route('admin.pembayaran.index')
@@ -167,13 +166,13 @@ class PembayaranController extends Controller
     private function createIfNotExists($userId, $biaya, $today)
     {
         Pembayaran::create([
-            'id_user' => $userId,
-            'keamanan' => $biaya->keamanan,
-            'kebersihan' => $biaya->kebersihan,
-            'tanggal' => $today,
+            'id_user'             => $userId,
+            'keamanan'            => $biaya->keamanan,
+            'kebersihan'          => $biaya->kebersihan,
+            'tanggal'             => $today,
             'tanggal_jatuh_tempo' => $biaya->tanggal_jatuh_tempo,
-            'status' => 'belum terbayar',
-            'total' => $biaya->keamanan + $biaya->kebersihan,
+            'status'              => 'belum terbayar',
+            'total'               => $biaya->keamanan + $biaya->kebersihan,
         ]);
     }
 }
