@@ -22,10 +22,7 @@ class UserMidtransController extends Controller
         Config::$isSanitized = true;
         Config::$is3ds = true;
 
-        \Midtrans\Config::$curlOptions = [
-        CURLOPT_SSL_VERIFYPEER => false,
-        CURLOPT_SSL_VERIFYHOST => 0,
-    ];
+        
 
         $orderId = 'INV-'.$pembayaran->id.'-'.time();
 
