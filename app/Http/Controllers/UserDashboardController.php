@@ -10,18 +10,18 @@ use Illuminate\Support\Facades\Auth;
 
 class UserDashboardController extends Controller
 {
-    public function index()
-    {
-         $userId = Auth::id();
+   public function index()
+{
+    $userId = Auth::id();
 
-    // tagihan aktif
+    // Ambil tagihan terbaru, apapun statusnya (Lunas atau Belum)
     $tagihan = Pembayaran::where('id_user', $userId)
-        ->whereIn('status', ['belum terbayar', 'menunggu pembayaran'])
         ->latest('tanggal')
         ->first();
 
     $showPopupJatuhTempo = false;
 
+    // Cek popup cuma kalau statusnya BUKAN berhasil dibayar
     if ($tagihan && $tagihan->status !== 'berhasil dibayar') {
         if (Carbon::now()->gt(Carbon::parse($tagihan->tanggal_jatuh_tempo))) {
             $showPopupJatuhTempo = true;
@@ -31,13 +31,13 @@ class UserDashboardController extends Controller
     return view('users.home.index', [
         'pengumuman' => Pengumuman::latest()->take(5)->get(),
         'iklans' => Iklan::latest()->take(5)->get(),
-        'tagihan' => $tagihan,
+        'tagihan' => $tagihan, // Sekarang ini berisi data terakhir meskipun sudah lunas
         'totalPembayaran' => Pembayaran::where('id_user', $userId)
             ->where('status', 'berhasil dibayar')
             ->sum('total'),
         'showPopupJatuhTempo' => $showPopupJatuhTempo,
     ]);
-    }
+}
 
    
 }
