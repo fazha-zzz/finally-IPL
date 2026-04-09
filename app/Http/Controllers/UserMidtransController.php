@@ -22,10 +22,6 @@ class UserMidtransController extends Controller
         Config::$isSanitized = true;
         Config::$is3ds = true;
 
-        \Midtrans\Config::$curlOptions = [
-    CURLOPT_SSLVERSION     => CURL_SSLVERSION_TLSv1_2,
-    CURLOPT_SSL_VERIFYPEER => false, // Coba ini jika TLS 1.2 saja masih gagal
-     ];
 
         $orderId = 'INV-'.$pembayaran->id.'-'.time();
 
