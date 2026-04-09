@@ -11,7 +11,9 @@ class CallbackController extends Controller
 {
     public function handle(Request $request)
     {
-        Log::info('MIDTRANS CALLBACK RAW', $request->all());
+        \Log::info('CALLBACK MASUK', $request->all()); // 🔥 tambahkan ini
+Log::info('MIDTRANS CALLBACK RAW', $request->all());
+
 
         $orderId = $request->order_id;
         $transactionStatus = $request->transaction_status;
